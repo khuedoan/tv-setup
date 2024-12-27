@@ -1,4 +1,4 @@
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   disko.devices = {
@@ -47,6 +47,15 @@
     bluetooth.enable = true;
   };
 
+  nixpkgs = {
+    config = {
+      allowUnfreePredicate = pkg: builtins.elem (lib.getName pkg) [
+        "steam"
+        "steam-unwrapped"
+      ];
+    };
+  };
+
   environment = {
     systemPackages = with pkgs; [
       curl
@@ -62,7 +71,24 @@
     ];
   };
 
-  services.getty.autologinUser = "media";
+  programs = {
+    steam = {
+      enable = true;
+      gamescopeSession = {
+        enable = true;
+      };
+    };
+    gamescope = {
+      enable = true;
+      capSysNice = true;
+    };
+  };
+
+  services = {
+    getty = {
+      autologinUser = "media";
+    };
+  };
 
   users.users = {
     media = {
