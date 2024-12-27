@@ -24,10 +24,6 @@
       livingroom = nixpkgs.lib.nixosSystem {
         modules = common ++ [ ./hosts/livingroom ];
       };
-
-      testvm = nixpkgs.lib.nixosSystem {
-        modules = common ++ [ ./hosts/testvm ];
-      };
     };
   };
 }

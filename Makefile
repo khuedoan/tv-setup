@@ -10,9 +10,9 @@ build:
 
 test:
 	nixos-rebuild \
-		--flake '.#testvm' \
+		--flake '.#${host}' \
 		build-vm
-	./result/bin/run-testvm-vm
+	./result/bin/run-${host}-vm
 
 diff:
 	nixos-rebuild \
@@ -26,11 +26,9 @@ update:
 	nix flake update
 
 install:
-	nixos-generate-config --no-filesystems --show-hardware-config > 'hosts/${host}/hardware-configuration.nix'
-	git add . && git diff --staged
-	# This consumes significant memory on the live USB because dependencies are
-	# downloaded to tmpfs. The configuration must be small, or the machine must
-	# have a lot of RAM.
+	# TODO This consumes significant memory on the live USB because
+	# dependencies are downloaded to tmpfs. The configuration must be small, or
+	# the machine must have a lot of RAM.
 	sudo nix \
 		--extra-experimental-features 'nix-command flakes' \
 		run 'github:nix-community/disko/latest#disko-install' -- \
