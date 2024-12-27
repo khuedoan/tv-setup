@@ -13,7 +13,7 @@
     };
   };
 
-  outputs = { self, nixpkgs, disko, nixos-hardware, home-manager }: {
+  outputs = { self, nixpkgs, disko, home-manager }: {
     nixosConfigurations = let
       common = [
         disko.nixosModules.disko

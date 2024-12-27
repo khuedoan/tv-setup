@@ -69,14 +69,17 @@
       unzip
       watch
     ];
+    loginShellInit = ''
+      if [ -z "$WAYLAND_DISPLAY" ] && [ "$XDG_VTNR" -eq 1 ]; then
+        exec gamescope --steam -- steam -tenfoot -pipewire-dmabuf
+      fi
+    '';
   };
 
   programs = {
     steam = {
       enable = true;
-      gamescopeSession = {
-        enable = true;
-      };
+      gamescopeSession.enable = true;
     };
     gamescope = {
       enable = true;
@@ -86,12 +89,24 @@
 
   services = {
     getty = {
-      autologinUser = "media";
+      autologinUser = "tivi";
+    };
+  };
+
+  security = {
+    rtkit = {
+      enable = true;
     };
   };
 
   users.users = {
-    media = {
+    admin = {
+      isNormalUser = true;
+      extraGroups = [
+        "wheel"
+      ];
+    };
+    tivi = {
       isNormalUser = true;
     };
   };
@@ -100,7 +115,7 @@
     useGlobalPkgs = true;
     useUserPackages = true;
     users = {
-      media = {
+      tivi = {
         home = {
           stateVersion = "24.11";
         };
