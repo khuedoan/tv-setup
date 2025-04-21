@@ -4,6 +4,8 @@ Configure my Android TVs.
 
 ## Usage
 
+Before you begin, edit the `Makefile` to cuxtomize to your liking.
+
 ### Enable developer mode
 
 - Somewhere in Settings -> About -> Build number -> Press 7 times
