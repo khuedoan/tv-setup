@@ -1,29 +1,24 @@
 {
   inputs = {
-    nixpkgs = {
-      url = "github:nixos/nixpkgs/nixos-24.11";
-    };
-    disko = {
-      url = "github:nix-community/disko";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
-    home-manager = {
-      url = "github:nix-community/home-manager/release-24.11";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixpkgs.url = "github:NixOS/nixpkgs/nixos-24.11";
   };
 
-  outputs = { self, nixpkgs, disko, home-manager }: {
-    nixosConfigurations = let
-      common = [
-        disko.nixosModules.disko
-        home-manager.nixosModules.home-manager
-        ./configuration.nix
-      ];
-    in {
-      livingroom = nixpkgs.lib.nixosSystem {
-        modules = common ++ [ ./hosts/livingroom ];
+  outputs = { self, nixpkgs }:
+  let
+    supportedSystems = nixpkgs.lib.genAttrs [
+      "x86_64-linux"
+      "aarch64-linux"
+      "aarch64-darwin"
+    ];
+  in
+  {
+    devShells = supportedSystems (system: {
+      default = with nixpkgs.legacyPackages.${system}; mkShell {
+        packages = [
+          android-tools
+          aria2
+        ];
       };
-    };
+    });
   };
 }

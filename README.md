@@ -1,15 +1,33 @@
-# Tivi
+# TV Setup
 
-Yes, my TVs run NixOS.
+Configure my Android TVs.
 
-> "Tivi" is what we call a television (TV) in Vietnamese.
+## Usage
 
-## Testing
+### Enable developer mode
+
+- Somewhere in Settings -> About -> Build number -> Press 7 times
+
+### Get the TV's IP address
+
+- Somewhere in Settings -> About -> Status
+
+### Connect to the TV
 
 ```sh
-make test host=livingroom
+make connect IP=192.168.1.x
 ```
+
+Accept on the TV when prompted.
+
+### Install apps
+
+```
+make
+```
+
+Accept on the TV when prompted.
 
 ## Acknowledgements
 
-- [Jovian NixOS on the Steam Deck](https://github.com/Jovian-Experiments/Jovian-NixOS)
+- [How To Sideload Apps On Your Android TV](https://fossbytes.com/side-load-apps-android-tv/#h-how-to-sideload-apps-on-your-android-tv-using-adb)

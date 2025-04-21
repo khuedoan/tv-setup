@@ -1,37 +1,13 @@
-.POSIX:
-.PHONY: default build test diff update install
+.PHONY: default connect apps smarttube
 
-default: build
+default: connect apps
 
-build:
-	sudo nixos-rebuild \
-		--flake '.#${host}' \
-		switch
+connect:
+	adb connect "${IP}"
+	adb devices
 
-test:
-	nixos-rebuild \
-		--flake '.#${host}' \
-		build-vm
-	./result/bin/run-${host}-vm
+apps: smarttube
 
-diff:
-	nixos-rebuild \
-		--flake '.#${host}' \
-		build
-	nix store diff-closures \
-		--allow-symlinked-store \
-		/nix/var/nix/profiles/system ./result
-
-update:
-	nix flake update
-
-install:
-	# TODO This consumes significant memory on the live USB because
-	# dependencies are downloaded to tmpfs. The configuration must be small, or
-	# the machine must have a lot of RAM.
-	sudo nix \
-		--extra-experimental-features 'nix-command flakes' \
-		run 'github:nix-community/disko/latest#disko-install' -- \
-		--write-efi-boot-entries \
-		--flake '.#${host}' \
-		--disk main '${disk}'
+smarttube:
+	aria2c https://github.com/yuliskov/SmartTube/releases/download/27.37s/SmartTube_stable_27.37_armeabi-v7a.apk
+	adb install SmartTube_stable_27.37_armeabi-v7a.apk
