@@ -1,4 +1,4 @@
-.PHONY: default connect apps fdroid smarttube jellyfin stremio
+.PHONY: default connect apps fdroid aurora smarttube jellyfin stremio
 
 default: connect apps
 
@@ -6,13 +6,19 @@ connect:
 	adb connect "${IP}"
 	adb devices
 
-apps: fdroid smarttube jellyfin
+apps: fdroid aurora smarttube jellyfin
 
 F-Droid.apk:
 	aria2c https://f-droid.org/F-Droid.apk
 
 fdroid: F-Droid.apk
 	adb install F-Droid.apk
+
+com.aurora.store_76.apk:
+	aria2c https://f-droid.org/repo/com.aurora.store_76.apk
+
+aurora: com.aurora.store_76.apk
+	adb install com.aurora.store_76.apk
 
 SmartTube_stable_30.56_armeabi-v7a.apk:
 	aria2c https://github.com/yuliskov/SmartTube/releases/download/30.56s/SmartTube_stable_30.56_armeabi-v7a.apk
