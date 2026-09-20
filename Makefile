@@ -20,6 +20,8 @@ debloat:
 	adb shell pm disable-user --user 0 com.tcl.t_solo
 	adb shell pm disable-user --user 0 com.tcl.ui_mediaCenter
 	adb shell pm disable-user --user 0 com.tcl.tv.tclhome_passive
+	adb shell pm disable-user --user 0 com.tcl.dashboard
+	adb shell pm disable-user --user 0 com.tcl.guard
 
 F-Droid.apk:
 	aria2c https://f-droid.org/F-Droid.apk
