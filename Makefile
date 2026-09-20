@@ -1,4 +1,4 @@
-.PHONY: default connect apps fdroid aurora smarttube jellyfin stremio
+.PHONY: default connect apps debloat fdroid aurora smarttube jellyfin stremio
 
 default: connect apps
 
@@ -7,6 +7,19 @@ connect:
 	adb devices
 
 apps: fdroid aurora smarttube jellyfin
+
+debloat:
+	adb shell pm disable-user --user 0 com.tcl.exhibit
+	adb shell pm disable-user --user 0 com.tcl.ocean.instructions
+	adb shell pm disable-user --user 0 com.tcl.repairguide
+	adb shell pm disable-user --user 0 com.tcl.hearaid
+	adb shell pm disable-user --user 0 com.tcl.channelplus
+	adb shell pm disable-user --user 0 com.tcl.magiconnectfree
+	adb shell pm disable-user --user 0 com.tcl.gamebar
+	adb shell pm disable-user --user 0 com.tcl.esticker
+	adb shell pm disable-user --user 0 com.tcl.t_solo
+	adb shell pm disable-user --user 0 com.tcl.ui_mediaCenter
+	adb shell pm disable-user --user 0 com.tcl.tv.tclhome_passive
 
 F-Droid.apk:
 	aria2c https://f-droid.org/F-Droid.apk
