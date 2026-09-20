@@ -1,4 +1,4 @@
-.PHONY: default connect apps debloat fdroid aurora smarttube jellyfin stremio
+.PHONY: default connect apps debloat fdroid aurora projectivy smarttube jellyfin stremio
 
 default: connect apps
 
@@ -6,7 +6,7 @@ connect:
 	adb connect "${IP}"
 	adb devices
 
-apps: fdroid aurora smarttube jellyfin
+apps: fdroid aurora projectivy smarttube jellyfin
 
 debloat:
 	adb shell pm disable-user --user 0 com.tcl.exhibit
@@ -34,6 +34,13 @@ com.aurora.store_76.apk:
 
 aurora: com.aurora.store_76.apk
 	adb install com.aurora.store_76.apk
+
+ProjectivyLauncher-4.71-c95-xda-release.apk:
+	aria2c https://github.com/spocky/miproja1/releases/download/4.71/ProjectivyLauncher-4.71-c95-xda-release.apk
+
+projectivy: ProjectivyLauncher-4.71-c95-xda-release.apk
+	adb install -r ProjectivyLauncher-4.71-c95-xda-release.apk
+	# TODO currently enable accessibility manually
 
 SmartTube_stable_30.56_armeabi-v7a.apk:
 	aria2c https://github.com/yuliskov/SmartTube/releases/download/30.56s/SmartTube_stable_30.56_armeabi-v7a.apk
